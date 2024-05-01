@@ -1,0 +1,13 @@
+---
+
+- name: rae-test playbook 
+  gather_facts: false
+  hosts: all
+  tasks:
+
+- name: do a ping on these servers and save the results in ping-output.txt
+  yum:
+    name: httpd
+    state: latest
+
+
