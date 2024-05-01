@@ -15,5 +15,43 @@
         content:
 "{{ ping_results.stdout }}
         dest: ping-output.txt
-  
 
+---
+ 
+- name: Copy httpd.conf to /tmp/
+  gather_facts: false
+  hosts: all
+  tasks:
+
+    - name: Copy httpd.conf
+      ansible.builtin.copy:
+        src: /etc/httpd/conf
+        dest: /tmp/httpd.conf
+      tags:
+        - push
+
+---
+
+- name: Set variable for rae server
+  gather_facts: false
+  hosts: rae
+  vars:
+    stype: jump
+  tasks:
+    - name: Debug variable value
+      ansible.builtin.debug:
+        msg: "The value of stype is 
+{{ stype }}"
+
+---
+
+- name: Set variable for localhosts server
+  gather_facts: false
+  hosts: localhosts
+  vars: 
+    stype: local
+  tasks:
+    -name: Debug variable value
+     ansible.builtin.debug:
+       msg: "The value of stype is
+{{ stype }}"
