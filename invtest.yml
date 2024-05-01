@@ -1,13 +1,19 @@
 ---
 
-- name: rae-test playbook 
+- name: Perform Ping and Save Results
   gather_facts: false
   hosts: all
   tasks:
 
-- name: do a ping on these servers and save the results in ping-output.txt
-  yum:
-    name: httpd
-    state: latest
+    - name: Ping Servers
+      ansible.builtin.ping: 
+        count: 3
+      register: ping_result
 
+    - name:  Save Ping Results to File
+      ansible.builtin.copy:
+        content:
+"{{ ping_results.stdout }}
+        dest: ping-output.txt
+  
 
